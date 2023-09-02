@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <title>{% block title %}{%endblock title %} | GoeyWebsite</title>
+</head>
+<body>
+    <nav class="border-b border-gray-300">
+        <div class="max-w-6xl mx-auto py-2 px-6 xl:px-0 flex items-center justify-between">
+            <div class="manu-left flex items-center space-x-6">
+                <a href="{% url 'core:home' %}" class="py-4 text-lg text-purple-500 font-semibold">Goey Home Logo</a>
+                <ul class="flex items-center space-x-4">
+                    <li><a href="{% url 'core:shop' %}">Shop</a></li>
+                    <li><a href="#">About</a></li>
+
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'core:logout' %}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- Menu right -->
+            <div class="menu-right flex items-center space-x-4">
+                <a href="{% url 'core:myaccount' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                      </svg>  
+                <div
+                    hx-get="{% url 'cart:hx_menu_cart' %}"
+                    hx-trigger="update-menu-cart from:body"
+                    hx-swap="innerHTML"
+                    >
+
+                    {% include 'cart/partials/menu_cart.html' %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main -->
+    <main>
+        {% block content %}
+        {% endblock content %}
+        
+    </main>
+    <!-- footer -->
+    <footer class="bg-gray-100">
+        <div class="max-w-6xl mx-auto py-10 px-6 xl:px-0 md:flex justify-between">
+            <!-- footer left -->
+            <div class="footer-left mb-12 md:mb-0">
+                <h2 class="mb-5 uppercase text-lg">About us</h2>
+                <p class="text-gray-700">Test test test</p>
+            </div>
+            <!-- footer right -->
+            <div class="footer-right">
+                <h2 class="mb-5 uppercase text-lg">Social Links</h2>
+                <ul class="space-y-2">
+                    <li><a href="" class="text-purple-500 hover:text-purple-800">Facebook</a></li>
+                    <li><a href="" class="text-purple-500 hover:text-purple-800">Twitter</a></li>
+                    <li><a href="" class="text-purple-500 hover:text-purple-800">Instagram</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </footer>
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+    
+    {% block scripts %}
+    {% endblock scripts %}
+</body>
+</html>
